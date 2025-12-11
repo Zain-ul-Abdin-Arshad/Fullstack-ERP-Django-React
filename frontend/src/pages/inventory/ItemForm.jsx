@@ -4,8 +4,8 @@
 
 import { useState, useEffect } from 'react';
 import { inventoryService } from '../../services/modules/inventory';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
+import Button from '../../components/Common/Button';
+import Input from '../../components/Common/Input';
 import toast from 'react-hot-toast';
 
 const ItemForm = ({ item, onClose }) => {

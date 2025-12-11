@@ -4,11 +4,11 @@
 
 import { useState, useEffect } from 'react';
 import { salesService } from '../../services/modules/sales';
-import Button from '../../components/common/Button';
-import Loading from '../../components/common/Loading';
-import Modal from '../../components/common/Modal';
+import Button from '../../components/Common/Button';
+import Loading from '../../components/Common/Loading';
+import Modal from '../../components/Common/Modal';
 import SalesOrderForm from './SalesOrderForm';
-import Alert from '../../components/common/Alert';
+import Alert from '../../components/Common/Alert';
 import { PlusIcon, TruckIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 import { format } from 'date-fns';

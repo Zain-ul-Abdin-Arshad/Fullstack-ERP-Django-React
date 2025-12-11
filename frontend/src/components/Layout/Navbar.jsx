@@ -1,78 +1,40 @@
 /**
- * Navigation Bar Component
+ * Navbar Component (Alternative to Sidebar)
+ * Can be used for top navigation if needed
  */
 
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useAuth();
-  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
-  if (!isAuthenticated) return null;
+  const menuItems = [
+    { path: '/dashboard', label: 'Dashboard' },
+    { path: '/inventory', label: 'Inventory' },
+    { path: '/vendors', label: 'Vendors' },
+    { path: '/clients', label: 'Clients' },
+    { path: '/purchases', label: 'Purchases' },
+    { path: '/sales', label: 'Sales' },
+  ];
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <Link to="/" className="text-xl font-bold text-blue-600">
-                ERP System
-              </Link>
-            </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+            {menuItems.map((item) => (
               <Link
-                to="/dashboard"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                key={item.path}
+                to={item.path}
+                className={`inline-flex items-center px-4 py-2 border-b-2 text-sm font-medium ${
+                  location.pathname === item.path
+                    ? 'border-blue-500 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
               >
-                Dashboard
+                {item.label}
               </Link>
-              <Link
-                to="/inventory"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Inventory
-              </Link>
-              <Link
-                to="/vendors"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Vendors
-              </Link>
-              <Link
-                to="/clients"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Clients
-              </Link>
-              <Link
-                to="/purchases"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Purchases
-              </Link>
-              <Link
-                to="/sales"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Sales
-              </Link>
-            </div>
-          </div>
-          <div className="flex items-center">
-            <button
-              onClick={handleLogout}
-              className="btn-danger"
-            >
-              Logout
-            </button>
+            ))}
           </div>
         </div>
       </div>

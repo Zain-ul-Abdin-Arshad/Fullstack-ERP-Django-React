@@ -4,8 +4,8 @@
 
 import { useState, useEffect } from 'react';
 import { vendorsService } from '../../services/modules/vendors';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
+import Button from '../../components/Common/Button';
+import Input from '../../components/Common/Input';
 import toast from 'react-hot-toast';
 
 const VendorForm = ({ vendor, onClose }) => {

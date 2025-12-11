@@ -6,9 +6,9 @@ import { useState, useEffect } from 'react';
 import { salesService } from '../../services/modules/sales';
 import { clientsService } from '../../services/modules/clients';
 import { inventoryService } from '../../services/modules/inventory';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
-import Alert from '../../components/common/Alert';
+import Button from '../../components/Common/Button';
+import Input from '../../components/Common/Input';
+import Alert from '../../components/Common/Alert';
 import toast from 'react-hot-toast';
 
 const SalesOrderForm = ({ onClose }) => {

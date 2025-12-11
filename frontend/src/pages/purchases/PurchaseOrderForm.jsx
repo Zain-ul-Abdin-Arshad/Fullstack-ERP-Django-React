@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react';
 import { purchasesService } from '../../services/modules/purchases';
 import { vendorsService } from '../../services/modules/vendors';
 import { inventoryService } from '../../services/modules/inventory';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
+import Button from '../../components/Common/Button';
+import Input from '../../components/Common/Input';
 import toast from 'react-hot-toast';
 
 const PurchaseOrderForm = ({ onClose }) => {

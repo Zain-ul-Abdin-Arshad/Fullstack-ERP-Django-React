@@ -9,8 +9,7 @@ import {
   BuildingStorefrontIcon,
   UserGroupIcon,
   ShoppingCartIcon,
-  BanknotesIcon,
-  ChartBarIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
 
 const Sidebar = () => {
@@ -22,32 +21,38 @@ const Sidebar = () => {
     { path: '/vendors', label: 'Vendors', icon: BuildingStorefrontIcon },
     { path: '/clients', label: 'Clients', icon: UserGroupIcon },
     { path: '/purchases', label: 'Purchases', icon: ShoppingCartIcon },
-    { path: '/sales', label: 'Sales', icon: BanknotesIcon },
-    { path: '/accounts', label: 'Accounts', icon: ChartBarIcon },
+    { path: '/sales', label: 'Sales', icon: TruckIcon },
   ];
 
-  const isActive = (path) => location.pathname.startsWith(path);
+  const isActive = (path) => {
+    return location.pathname === path || location.pathname.startsWith(path + '/');
+  };
 
   return (
-    <div className="w-64 bg-gray-900 text-white min-h-screen">
-      <div className="p-6">
-        <h1 className="text-2xl font-bold">ERP System</h1>
+    <div className="w-64 bg-gray-800 text-white flex flex-col">
+      {/* Logo */}
+      <div className="h-16 flex items-center justify-center border-b border-gray-700">
+        <h1 className="text-xl font-bold">ERP System</h1>
       </div>
-      <nav className="mt-8">
+
+      {/* Navigation */}
+      <nav className="flex-1 px-4 py-4 space-y-2">
         {menuItems.map((item) => {
           const Icon = item.icon;
+          const active = isActive(item.path);
+          
           return (
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center px-6 py-3 transition-colors ${
-                isActive(item.path)
-                  ? 'bg-primary-600 text-white'
-                  : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+              className={`flex items-center px-4 py-3 rounded-lg transition-colors ${
+                active
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
               }`}
             >
-              <Icon className="h-5 w-5 mr-3" />
-              {item.label}
+              <Icon className="w-5 h-5 mr-3" />
+              <span className="font-medium">{item.label}</span>
             </Link>
           );
         })}
