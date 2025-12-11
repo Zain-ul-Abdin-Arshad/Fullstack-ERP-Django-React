@@ -9,7 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import SalesOrder, SalesItem
 from .serializers import (
     SalesOrderSerializer, SalesItemSerializer,
-    SalesOrderCreateSerializer
+    SalesOrderCreateSerializer, InvoiceSerializer
 )
 
 
@@ -62,6 +62,13 @@ class SalesOrderViewSet(viewsets.ModelViewSet):
             'total_amount': total,
             'sales_order': serializer.data
         })
+
+    @action(detail=True, methods=['get'])
+    def invoice(self, request, pk=None):
+        """Generate invoice/bill for sales order"""
+        sales_order = self.get_object()
+        serializer = InvoiceSerializer(sales_order)
+        return Response(serializer.data)
 
 
 class SalesItemViewSet(viewsets.ModelViewSet):
