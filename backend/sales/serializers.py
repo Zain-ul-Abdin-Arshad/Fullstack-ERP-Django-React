@@ -4,6 +4,7 @@ Django REST Framework Serializers for Sales module
 
 from rest_framework import serializers
 from .models import SalesOrder, SalesItem
+from decimal import Decimal
 
 
 class SalesItemSerializer(serializers.ModelSerializer):
@@ -88,4 +89,84 @@ class SalesOrderCreateSerializer(serializers.ModelSerializer):
         
         sales_order.calculate_total()
         return sales_order
+
+
+class InvoiceSerializer(serializers.ModelSerializer):
+    """Serializer for generating invoices/bills from sales orders"""
+    client_name = serializers.CharField(source='client.name', read_only=True)
+    client_code = serializers.CharField(source='client.code', read_only=True)
+    client_address = serializers.SerializerMethodField()
+    client_contact = serializers.SerializerMethodField()
+    client_email = serializers.CharField(source='client.email', read_only=True)
+    client_tax_id = serializers.CharField(source='client.tax_id', read_only=True, allow_null=True)
+    invoice_number = serializers.CharField(source='order_number', read_only=True)
+    invoice_date = serializers.DateField(source='order_date', read_only=True)
+    items = serializers.SerializerMethodField()
+    subtotal = serializers.SerializerMethodField()
+    discount = serializers.DecimalField(source='discount_amount', max_digits=12, decimal_places=2, read_only=True)
+    total = serializers.DecimalField(source='total_amount', max_digits=12, decimal_places=2, read_only=True)
+    status_display = serializers.SerializerMethodField()
+    warehouse_name = serializers.CharField(source='warehouse.name', read_only=True, allow_null=True)
+    notes = serializers.CharField(read_only=True, allow_null=True)
+
+    class Meta:
+        model = SalesOrder
+        fields = [
+            'id', 'invoice_number', 'invoice_date', 'status', 'status_display',
+            'client_name', 'client_code', 'client_address', 'client_contact',
+            'client_email', 'client_tax_id', 'warehouse_name',
+            'items', 'subtotal', 'discount', 'total', 'notes',
+            'expected_delivery_date', 'shipped_date', 'delivered_date'
+        ]
+
+    def get_client_address(self, obj):
+        """Get formatted client address"""
+        client = obj.client
+        address_parts = []
+        if client.address:
+            address_parts.append(client.address)
+        if client.city:
+            address_parts.append(client.city)
+        if client.state:
+            address_parts.append(client.state)
+        if client.postal_code:
+            address_parts.append(client.postal_code)
+        if client.country:
+            address_parts.append(client.country)
+        return ', '.join(address_parts) if address_parts else 'N/A'
+
+    def get_client_contact(self, obj):
+        """Get formatted client contact information"""
+        client = obj.client
+        contact_parts = []
+        if client.contact_number:
+            contact_parts.append(f"Phone: {client.contact_number}")
+        if client.email:
+            contact_parts.append(f"Email: {client.email}")
+        return ' | '.join(contact_parts) if contact_parts else 'N/A'
+
+    def get_items(self, obj):
+        """Get invoice items with details"""
+        items = []
+        for sales_item in obj.sales_items.all():
+            items.append({
+                'id': sales_item.id,
+                'item_name': sales_item.item.name,
+                'item_sku': sales_item.item.sku,
+                'description': sales_item.item.description or '',
+                'quantity': sales_item.quantity,
+                'unit_price': float(sales_item.unit_price),
+                'discount_percentage': float(sales_item.discount_percentage),
+                'line_total': float(sales_item.line_total),
+            })
+        return items
+
+    def get_subtotal(self, obj):
+        """Calculate subtotal before discount"""
+        subtotal = sum(item.line_total for item in obj.sales_items.all())
+        return float(subtotal + obj.discount_amount)
+
+    def get_status_display(self, obj):
+        """Get human-readable status"""
+        return obj.get_status_display()
 
