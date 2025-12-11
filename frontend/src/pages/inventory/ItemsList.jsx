@@ -4,10 +4,10 @@
 
 import { useState, useEffect } from 'react';
 import { inventoryService } from '../../services/modules/inventory';
-import Button from '../../components/common/Button';
-import Loading from '../../components/common/Loading';
-import Alert from '../../components/common/Alert';
-import Modal from '../../components/common/Modal';
+import Button from '../../components/Common/Button';
+import Loading from '../../components/Common/Loading';
+import Alert from '../../components/Common/Alert';
+import Modal from '../../components/Common/Modal';
 import ItemForm from './ItemForm';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';

@@ -4,9 +4,9 @@
 
 import { useState, useEffect } from 'react';
 import { vendorsService } from '../../services/modules/vendors';
-import Button from '../../components/common/Button';
-import Loading from '../../components/common/Loading';
-import Modal from '../../components/common/Modal';
+import Button from '../../components/Common/Button';
+import Loading from '../../components/Common/Loading';
+import Modal from '../../components/Common/Modal';
 import VendorForm from './VendorForm';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';

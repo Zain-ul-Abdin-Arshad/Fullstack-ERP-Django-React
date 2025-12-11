@@ -4,8 +4,8 @@
 
 import { useState, useEffect } from 'react';
 import { clientsService } from '../../services/modules/clients';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
+import Button from '../../components/Common/Button';
+import Input from '../../components/Common/Input';
 import toast from 'react-hot-toast';
 
 const ClientForm = ({ client, onClose }) => {

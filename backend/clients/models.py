@@ -4,7 +4,7 @@ Complete Client model for managing customers and clients
 """
 
 from django.db import models
-from django.core.validators import EmailValidator
+from django.core.validators import EmailValidator, MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
 
 
@@ -96,7 +96,7 @@ class Client(models.Model):
         max_digits=5,
         decimal_places=2,
         default=0.00,
-        validators=[models.MinValueValidator(0), models.MaxValueValidator(100)],
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
         verbose_name=_("Discount Percentage"),
         help_text=_("Standard discount percentage for this client")
     )

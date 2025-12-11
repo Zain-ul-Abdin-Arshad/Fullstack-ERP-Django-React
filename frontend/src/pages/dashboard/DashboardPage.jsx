@@ -7,7 +7,7 @@ import { inventoryService } from '../../services/modules/inventory';
 import { salesService } from '../../services/modules/sales';
 import { purchasesService } from '../../services/modules/purchases';
 import { accountsService } from '../../services/modules/accounts';
-import Loading from '../../components/common/Loading';
+import Loading from '../../components/Common/Loading';
 import InventoryOverview from './InventoryOverview';
 import SalesOverview from './SalesOverview';
 import PurchasesOverview from './PurchasesOverview';

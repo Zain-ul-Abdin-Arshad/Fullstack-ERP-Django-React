@@ -4,8 +4,8 @@
 
 import { useState, useEffect } from 'react';
 import { inventoryService } from '../../services/modules/inventory';
-import Loading from '../../components/common/Loading';
-import Alert from '../../components/common/Alert';
+import Loading from '../../components/Common/Loading';
+import Alert from '../../components/Common/Alert';
 import { BuildingStorefrontIcon } from '@heroicons/react/24/outline';
 
 const StockView = () => {
